@@ -379,7 +379,7 @@ modded class PlayerBase
 		{
 			m_IsAllowedToSleep = true; // Client-side, allow yawn effect (for compatibility with my Immersive Login mod)
 			m_LastYawn = m_CurrentYawn;
-			if (m_YawnTime == 0 && (Math.RandomFloat01() <= 0.8 || m_Tiredness >= 900)) // Trigger yawn black screen effect (with slight randomness)
+			if (m_YawnTime == 0 && (Math.RandomFloat01() <= 0.6 || m_Tiredness >= 900)) // Trigger yawn black screen effect (with slight randomness)
 			{
 				m_YawnTime = 0.01;
 			}
