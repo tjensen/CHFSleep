@@ -39,6 +39,7 @@ $buildcode = $lastexitcode
 $builderror = $errorMessage
 
 Copy-Item "mod.cpp" -Destination "P:\@${ModName}\mod.cpp"
+Copy-Item "types.xml" -Destination "P:\@${ModName}\types.xml"
 
 Set-Content -Path "$VersionFile" -Value "$originalVersion" -NoNewLine
 Set-Content -Path "$ModCppFile" -Value "$originalModCpp" -NoNewLine
