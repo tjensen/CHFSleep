@@ -1,4 +1,4 @@
-name = "Chernarus Has Fallen Sleep Mod";
+name = "CHFSleep";
 picture = "chfsleep\data\zensleep_thumbnail.edds";
 logoSmall = "chfsleep\data\zensleep_thumbnail.edds";
 logo = "chfsleep\data\zensleep_thumbnail.edds";
