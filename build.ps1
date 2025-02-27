@@ -34,7 +34,7 @@ New-Item -Type Directory "P:\@${ModName}\keys" | Out-Null
 $originalVersion -replace "\bdev\b","$version" | Set-Content -path "$VersionFile" -NoNewLine
 $originalModCpp -replace "\bdev\b","$rawVersion" | Set-Content -path "$ModCppFile" -NoNewLine
 
-pbo "--sign=$env:BIPRIVATEKEY_PATH" "--header=prefix=${ModName}".ToLower() "--header=version=${version}" "--pattern=**/config.cpp" "--pattern=scripts/**/*.c" "--pattern=**/*.paa" "--pattern=**/*.csv" "--pattern=**/*.edds" "--pattern=**/*.layout" "--pattern=**/*.ogg" "--pattern=**/*.xml" "P:\@${ModName}\addons\chfsleep.pbo"
+pbo "--sign=$env:BIPRIVATEKEY_PATH" "--header=prefix=${ModName}".ToLower() "--header=version=${version}" "--pattern=**/config.cpp" "--pattern=scripts/**/*.c" "--pattern=**/*.paa" "--pattern=**/*.csv" "--pattern=**/*.edds" "--pattern=**/*.layout" "--pattern=**/*.ogg" "--pattern=data/**/*.xml" "P:\@${ModName}\addons\chfsleep.pbo"
 $buildcode = $lastexitcode
 $builderror = $errorMessage
 
