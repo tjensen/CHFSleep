@@ -18,11 +18,11 @@ modded class MissionGameplay extends MissionBase
 			return;
 		}
 
-		if (zenInput.LocalPress("UAZenSleep_RefreshConfig")) // Sends request to server to reload json config if player is admin
+		if (zenInput.LocalPress("UACHFSleep_RefreshConfig")) // Sends request to server to reload json config if player is admin
 		{
 			player.RequestServerConfigReload();
 		} else
-		if (zenInput.LocalPress("UAZenSleep_SleepKey")) // Triggers the lie-down emote if the player can lie down ingame
+		if (zenInput.LocalPress("UACHFSleep_SleepKey")) // Triggers the lie-down emote if the player can lie down ingame
 		{
 			bool canSleep = player.GetEmoteManager().CanPlayEmote(EmoteConstants.ID_EMOTE_LYINGDOWN);
 

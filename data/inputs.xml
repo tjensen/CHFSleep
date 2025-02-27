@@ -2,19 +2,19 @@
 <modded_inputs>
 	<inputs>
 		<actions>
-			<input name="UAZenSleep_SleepKey" loc="STR_ZenSleep_SleepKey_Txt" />
-			<input name="UAZenSleep_RefreshConfig" loc="STR_ZenSleep_RefreshConfig_Txt" />
+			<input name="UACHFSleep_SleepKey" loc="STR_CHFSleep_SleepKey_Txt" />
+			<input name="UACHFSleep_RefreshConfig" loc="STR_CHFSleep_RefreshConfig_Txt" />
 		</actions>
-		<sorting name="ZEN" loc="ZEN">
-			<input name="UAZenSleep_SleepKey"/>
-			<input name="UAZenSleep_RefreshConfig"/>
+		<sorting name="CHF" loc="CHF">
+			<input name="UACHFSleep_SleepKey"/>
+			<input name="UACHFSleep_RefreshConfig"/>
 		</sorting>
 	</inputs>
     <preset>
-		<input name="UAZenSleep_SleepKey">
+		<input name="UACHFSleep_SleepKey">
             <btn name=""/>
         </input>
-		<input name="UAZenSleep_RefreshConfig">
+		<input name="UACHFSleep_RefreshConfig">
             <btn name="kNumpad3"/>
         </input>
     </preset>
