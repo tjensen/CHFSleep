@@ -16,8 +16,8 @@ modded class IngameHud
         super.Init(hud_panel_widget);
 
         // Tiredness HUD
-        Class.CastTo(m_SleepModLayout, GetGame().GetWorkspace().CreateWidgets("chfsleep/data/layout/ZenSleepLayout.layout"));
-        ProgressBarWidget.CastTo(m_Tiredness, m_SleepModLayout.FindAnyWidget("SleepBar"));
+        m_SleepModLayout = GetGame().GetWorkspace().CreateWidgets("chfsleep/data/layout/tiredness.layout");
+        m_Tiredness = ProgressBarWidget.Cast(m_SleepModLayout.FindAnyWidget("SleepBar"));
         m_TirednessIconPanel = m_SleepModLayout.FindAnyWidget("SleepIconPanel");
         m_TirednessBarPanel = m_SleepModLayout.FindAnyWidget("SleepBarPanel");
         m_SleepModHudPanel = m_SleepModLayout.FindAnyWidget("HudPanel_Tiredness");
