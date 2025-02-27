@@ -1,29 +1,10 @@
-/*
-   Huge credit to Lucian who wrote the foundation for this mod (https://steamcommunity.com/sharedfiles/filedetails/?id=1735691552)
-   Also credit to the modder who updated Lucian's mod for the latest DayZ builds (https://steamcommunity.com/sharedfiles/filedetails/?id=2265389602)
-   Massive thanks to Lucian for allowing his mod to be open-source to all:
-
-   Lucian's Medical Attention Description (Updated 4 Mar, 2020):
-   You ARE allowed to repack, reupload, modify or reproduce any portions of this mod.
-   It would be appreciated if you include link to this original mod page.
-
-   In the same spirit, so is mine. Use this code however you like with no credit needed for me - but please credit Lucian for the foundation :)
-
-
-
-   24/12/22: I have become much more experienced at modding since creating this re-make while learning the ropes. The code here is
-             "acceptable", but not optimal. By that, I mean it works, but it's like a functioning alcoholic. I plan to remake this mod
-             from the ground-up when I have time - but for now, it is what it is, and if you're like me and love immersion - it works!
-
-             Stay tuned for "ZenSleep v2.0". I've already spent so much time on this my girlfriend wants to leave me, but I'm no quitter.
-*/
-
 class CfgPatches
 {
     class CHFSleep
     {
         requiredAddons[]=
         {
+            "JM_CF_Scripts",
             "DZ_Scripts",
             "DZ_Sounds_Effects"
         };
