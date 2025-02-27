@@ -24,7 +24,7 @@ modded class IngameHud
 
         if (!m_Tiredness || !m_TirednessIconPanel || !m_TirednessBarPanel || !m_SleepModHudPanel)
         {
-            Print("[ZenSleepHUD] Failed to load UI layout!");
+            Print("[CHFSleep] Failed to load UI layout!");
             return;
         }
 

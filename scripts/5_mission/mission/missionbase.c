@@ -21,7 +21,7 @@ modded class MissionBase
             Param8< bool, bool, bool, bool, int, float, float, bool > data;
             if (!ctx.Read(data))
             {
-                Print("[ZenSleep] Error sync'ing server-side data to client in RPC_SendSleepDataToClient");
+                Print("[CHFSleep] Error sync'ing server-side data to client in RPC_SendSleepDataToClient");
                 return;
             }
 
@@ -58,13 +58,12 @@ modded class MissionBase
             Param1 <PlayerBase> dataPlayer;
             if (!ctx.Read(dataPlayer))
             {
-                Print("[ZenSleep] Error sync'ing client-side data to server in RPC_SendReloadConfigRequestToServer");
+                Print("[CHFSleep] Error sync'ing client-side data to server in RPC_SendReloadConfigRequestToServer");
                 return;
             }
 
             if (GetZenSleepConfig().AdminSteam64ID != dataPlayer.param1.GetIdentity().GetPlainId())
             {
-                //Print("[ZenSleep] Non-admin tried to request reload of config data: " + dataPlayer.param1.GetIdentity().GetName() + " [" + dataPlayer.param1.GetIdentity().GetPlainId() + "]");
                 return;
             }
 

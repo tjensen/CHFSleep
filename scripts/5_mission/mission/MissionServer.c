@@ -4,6 +4,8 @@ modded class MissionServer
 	{
 		GetZenSleepConfig();
 		super.OnInit();
-		Print("[ZenSleep] OnInit - Loaded config successfully.");
+		Print("[CHFSleep] OnInit - Loaded config successfully.");
 	}
-}
+};
+
+// vim:ft=enforce
