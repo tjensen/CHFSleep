@@ -2,7 +2,7 @@ modded class MissionServer
 {
 	override void OnInit()
 	{
-		GetZenSleepConfig();
+		GetCHFSleepConfig();
 		super.OnInit();
 		Print("[CHFSleep] OnInit - Loaded config successfully.");
 	}

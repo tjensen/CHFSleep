@@ -62,13 +62,13 @@ modded class MissionBase
                 return;
             }
 
-            if (GetZenSleepConfig().AdminSteam64ID != dataPlayer.param1.GetIdentity().GetPlainId())
+            if (GetCHFSleepConfig().AdminSteam64ID != dataPlayer.param1.GetIdentity().GetPlainId())
             {
                 return;
             }
 
             dataPlayer.param1.ZS_SendMessage("Reloading CHFSleep config...");
-            GetZenSleepConfig().Load();
+            GetCHFSleepConfig().Load();
 
             // Send new config update to all players on the server after a brief pause to ensure the new config has successfully loaded
             GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(this.UpdateAllPlayersSleepConfig, 1000, false);

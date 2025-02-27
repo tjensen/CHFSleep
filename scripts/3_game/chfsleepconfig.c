@@ -1,4 +1,4 @@
-class ZenSleepConfig
+class CHFSleepConfig
 {
     // Set actual config version (doesn't save to json)
     private static const string CONFIG_VERSION = "4";
@@ -115,12 +115,12 @@ class ZenSleepConfig
     {
         if (FileExist(zenModFolder + zenConfigName))
         {   // If config exists, load file
-            JsonFileLoader<ZenSleepConfig>.JsonLoadFile(zenModFolder + zenConfigName, this);
+            JsonFileLoader<CHFSleepConfig>.JsonLoadFile(zenModFolder + zenConfigName, this);
 
             // If version mismatch, backup old version of json before replacing it
             if (ConfigVersion != CONFIG_VERSION)
             {
-                JsonFileLoader<ZenSleepConfig>.JsonSaveFile(zenModFolder + zenConfigName + "_old", this);
+                JsonFileLoader<CHFSleepConfig>.JsonSaveFile(zenModFolder + zenConfigName + "_old", this);
             }
             else
             {
@@ -164,7 +164,7 @@ class ZenSleepConfig
         }
 
         // Save JSON config
-        JsonFileLoader<ZenSleepConfig>.JsonSaveFile(zenModFolder + zenConfigName, this);
+        JsonFileLoader<CHFSleepConfig>.JsonSaveFile(zenModFolder + zenConfigName, this);
     }
 
     // Return an energy drink with the given type name
@@ -238,19 +238,19 @@ class RestObject
 };
 
 // Save config data
-ref ZenSleepConfig m_ZenSleepConfig;
+ref CHFSleepConfig m_CHFSleepConfig;
 
 // Helper function to return Config data storage object
-static ZenSleepConfig GetZenSleepConfig()
+static CHFSleepConfig GetCHFSleepConfig()
 {
-    if(!m_ZenSleepConfig && GetGame().IsDedicatedServer())
+    if(!m_CHFSleepConfig && GetGame().IsDedicatedServer())
     {
         Print("[CHFSleep] Init");
-        m_ZenSleepConfig = new ZenSleepConfig;
-        m_ZenSleepConfig.Load();
+        m_CHFSleepConfig = new CHFSleepConfig;
+        m_CHFSleepConfig.Load();
     }
 
-    return m_ZenSleepConfig;
+    return m_CHFSleepConfig;
 };
 
 // vim:ft=enforce
