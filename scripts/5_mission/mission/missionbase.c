@@ -67,7 +67,7 @@ modded class MissionBase
                 return;
             }
 
-            dataPlayer.param1.ZS_SendMessage("Reloading ZenSleep config...");
+            dataPlayer.param1.ZS_SendMessage("Reloading CHFSleep config...");
             GetZenSleepConfig().Load();
 
             // Send new config update to all players on the server after a brief pause to ensure the new config has successfully loaded
