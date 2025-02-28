@@ -4,7 +4,7 @@ class ZenTirednessAgent: AgentBase
 
     override void Init()
     {
-        m_Type                  = ZenSleep_Agents.TIREDNESS;
+        m_Type                  = CHFSleep_Agents.TIREDNESS;
         m_Invasibility          = 0.08;
         m_TransferabilityIn     = 0;
         m_TransferabilityOut    = 0;

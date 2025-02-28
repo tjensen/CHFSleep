@@ -28,12 +28,12 @@ class ZenTirednessModifier: ModifierBase
 
     override protected void OnTick(PlayerBase player, float deltaT)
     {
-        float tiredness = player.GetSingleAgentCount(ZenSleep_Agents.TIREDNESS);
+        float tiredness = player.GetSingleAgentCount(CHFSleep_Agents.TIREDNESS);
 
         // If we are fully rested 100%, add some tiredness and stop here
         if (tiredness == 0)
         {
-            player.InsertAgent(ZenSleep_Agents.TIREDNESS, 1);
+            player.InsertAgent(CHFSleep_Agents.TIREDNESS, 1);
             return;
         }
 
@@ -70,14 +70,14 @@ class ZenTirednessModifier: ModifierBase
         bool fallUnconscious = tiredness >= m_UnconThreshold && rand <= unconChance && (!GetCHFSleepConfig().CanUnconInVehicle || !player.IsInVehicle());
 
         // Player is max tired, set them uncon
-        if (tiredness >= PluginTransmissionAgents.GetAgentMaxCount(ZenSleep_Agents.TIREDNESS))
+        if (tiredness >= PluginTransmissionAgents.GetAgentMaxCount(CHFSleep_Agents.TIREDNESS))
         {
             fallUnconscious = true;
             unconChance = 100.0;
 
             if (GetCHFSleepConfig().DebugOn)
             {
-                player.ZS_SendMessage("Fall uncon forced due to tiredness: " + tiredness + "/" + PluginTransmissionAgents.GetAgentMaxCount(ZenSleep_Agents.TIREDNESS));
+                player.ZS_SendMessage("Fall uncon forced due to tiredness: " + tiredness + "/" + PluginTransmissionAgents.GetAgentMaxCount(CHFSleep_Agents.TIREDNESS));
             }
 
             // Sometimes the client won't tell the server it's ready to fall uncon after yawning, this overrides that if necessary (TODO: Find a better way to fix this strange issue!)

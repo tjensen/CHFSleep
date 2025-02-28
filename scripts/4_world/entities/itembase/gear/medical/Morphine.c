@@ -23,7 +23,7 @@ modded class Morphine
             player.ZS_SendMessage("Giving tiredness penalty: " + penalty);
         }
 
-        player.InsertAgent(ZenSleep_Agents.TIREDNESS, penalty);
+        player.InsertAgent(CHFSleep_Agents.TIREDNESS, penalty);
     }
 };
 

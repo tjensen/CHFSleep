@@ -100,7 +100,7 @@ modded class PlayerBase
         if (GetGame().IsDedicatedServer())
         {
             // Send server-side data to client
-            m_Tiredness = GetSingleAgentCount(ZenSleep_Agents.TIREDNESS);
+            m_Tiredness = GetSingleAgentCount(CHFSleep_Agents.TIREDNESS);
             SyncServerConfig();
             SendSleepDataToClient();
             SetSynchDirty();
@@ -520,7 +520,7 @@ modded class PlayerBase
 
         if (GetGame().IsDedicatedServer()) // Server-side update
         {
-            m_Tiredness = GetSingleAgentCount(ZenSleep_Agents.TIREDNESS);
+            m_Tiredness = GetSingleAgentCount(CHFSleep_Agents.TIREDNESS);
 
             if (m_PlayerRestTick < GetCHFSleepConfig().RestUpdateTick)
                 return;
@@ -774,7 +774,7 @@ modded class PlayerBase
             }
 
             // Recover rest energy based on calculated modifiers
-            InsertAgent(ZenSleep_Agents.TIREDNESS, rest * -1);
+            InsertAgent(CHFSleep_Agents.TIREDNESS, rest * -1);
             m_Tiredness -= rest;
         }
         else // Client-side update
@@ -881,7 +881,7 @@ modded class PlayerBase
             {
                 float percent = amount / source.GetQuantityMax();
                 float replenish = (float)MAX_TIREDNESS * (((float)drink.EnergyGained * percent) / 100);
-                InsertAgent(ZenSleep_Agents.TIREDNESS, replenish);
+                InsertAgent(CHFSleep_Agents.TIREDNESS, replenish);
 
                 if (GetCHFSleepConfig().DebugOn)
                 {
