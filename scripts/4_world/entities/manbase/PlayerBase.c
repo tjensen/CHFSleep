@@ -27,7 +27,7 @@ modded class PlayerBase
     bool m_AttenuateSound = false; // If true, the sound is attenuated when the player is asleep
     bool m_OnlyBlurScreen = false; // If true, then when the player is sleeping their screen will blur instead of going black
     bool m_AllowInventoryWhileSleep = false; // Whether or not the player is permitted to access their inventory while sleeping
-    int m_OnlyShowSleepAbovePercent = 0; // From ZenConfig: Sets what sleep level to show the sleep meter at (optional - 0 = disabled)
+    int m_OnlyShowSleepAbovePercent = 0; // From config: Sets what sleep level to show the sleep meter at (optional - 0 = disabled)
     int m_SleepState; // Stores various sync settings related to this mod
     int m_Tiredness = 0; // Our current 'sleepiness'
     int m_CurrentYawn = 0; // Used to trigger the yawn black screen effect. If this doesn't match m_LastYawn the blink effect is triggered
@@ -134,7 +134,7 @@ modded class PlayerBase
         }
     }
 
-    // (Client-side) Sends an admin RPC requesting the server to reload the ZenSleep config
+    // (Client-side) Sends an admin RPC requesting the server to reload the CHFSleep config
     void RequestServerConfigReload()
     {
         GetRPCManager().SendRPC("ZS_RPC", "RPC_SendReloadConfigRequestToServer", new Param1< PlayerBase >(this), true, NULL);
@@ -144,7 +144,7 @@ modded class PlayerBase
     override void OnVariablesSynchronized()
     {
         super.OnVariablesSynchronized();
-        ZenSleep_ReadState();
+        CHFSleep_ReadState();
 
         // Debug message
         //ZS_DebugMessage("Sleeping=" + m_IsSleeping + " YawnSound=" + m_PlayYawnSound + " SleepSound=" + m_PlaySleepSound + " CurrentYawn=" + m_CurrentYawn + " FallUnconsciousFromTiredness=" + m_FallUnconsciousFromTiredness);
@@ -201,28 +201,28 @@ modded class PlayerBase
     }
 
     // Sets our sync state variables (server-side & client-side). Uses bitwise operators to be more efficient (from Lucian's original Medical Attention code)
-    void ZenSleep_SetState()
+    void CHFSleep_SetState()
     {
         m_SleepState = 0;
 
         if (m_IsSleeping)
-            m_SleepState |= ZenSleep_SyncState.IsSleeping;
+            m_SleepState |= CHFSleep_SyncState.IsSleeping;
 
         if (m_FallUnconsciousFromTiredness)
-            m_SleepState |= ZenSleep_SyncState.FallUnconsciousFromTiredness;
+            m_SleepState |= CHFSleep_SyncState.FallUnconsciousFromTiredness;
     }
 
     // (Client) read the state sent from the server
-    void ZenSleep_ReadState()
+    void CHFSleep_ReadState()
     {
-        m_IsSleeping = (m_SleepState & ZenSleep_SyncState.IsSleeping) != 0;
-        m_FallUnconsciousFromTiredness = (m_SleepState & ZenSleep_SyncState.FallUnconsciousFromTiredness) != 0;
+        m_IsSleeping = (m_SleepState & CHFSleep_SyncState.IsSleeping) != 0;
+        m_FallUnconsciousFromTiredness = (m_SleepState & CHFSleep_SyncState.FallUnconsciousFromTiredness) != 0;
     }
 
     // Sync's the client to the server
-    void ZenSleep_SyncState()
+    void CHFSleep_SyncState()
     {
-        ZenSleep_SetState();
+        CHFSleep_SetState();
         SetSynchDirty();
     }
 
@@ -271,7 +271,7 @@ modded class PlayerBase
                 AnimatedActionBase aab = AnimatedActionBase.Cast(amb.GetRunningAction());
                 if (aab)
                 {
-                    if (aab.GetActionCommandZENSLEEP(this) != DayZPlayerConstants.CMD_GESTUREFB_LYINGDOWN) // Current action is not a sleep action.
+                    if (aab.GetActionCommandCHFSLEEP(this) != DayZPlayerConstants.CMD_GESTUREFB_LYINGDOWN) // Current action is not a sleep action.
                     {
                         isSleeping = false;
                         m_CancelSleep = false;
@@ -298,7 +298,7 @@ modded class PlayerBase
         if (GetCHFSleepConfig().SleepBlackScreen)
         {
             m_IsSleeping = isSleeping;
-            ZenSleep_SetState();
+            CHFSleep_SetState();
         }
 
         return isSleeping;
@@ -487,7 +487,7 @@ modded class PlayerBase
                     {   // Apply highest sleep accelerator if multiple objects are found
                         m_RestObjectAccelerator = ro.SleepAcceleratorPercent / 100;
                         m_RestObjectInfluenza = ro.Influenza;
-                        if (Zen_IsNightTime())
+                        if (CHF_IsNightTime())
                         {
                             m_RestObjectMaxSleep = ro.MaxRestNight;
                         }
@@ -585,7 +585,7 @@ modded class PlayerBase
                 {
                     float randFlu = (float)Math.RandomIntInclusive(0, GetCHFSleepConfig().InfluenzaInjectNoFire);
 
-                    if (Zen_IsNightTime())
+                    if (CHF_IsNightTime())
                     {
                         randFlu *= GetCHFSleepConfig().InfluenzaMultiplierNightNoFire; // If it's night time increase influenza infection by 50%
                     }
@@ -604,7 +604,7 @@ modded class PlayerBase
             }
 
             // Sync our client-side variables
-            ZenSleep_SyncState();
+            CHFSleep_SyncState();
 
             // If text notifications are enabled then periodically tell the player their sleep %
             if (GetCHFSleepConfig().TextNotificationOn && !m_IsUnconscious && !GetCHFSleepConfig().DebugOn)
@@ -645,7 +645,7 @@ modded class PlayerBase
             // Debug message for dev purposes
             if (GetCHFSleepConfig().DebugOn)
             {
-                string debugStr = "HeatSource=" + m_FireNearby + " IsNight=" + Zen_IsNightTime() + " Inside=" + m_SleepingInside + " RestAcc=" + restAccelerator + " RestAccum=" + m_SleepAccumulatorModifier + " Wet=" + GetStatWet().Get();
+                string debugStr = "HeatSource=" + m_FireNearby + " IsNight=" + CHF_IsNightTime() + " Inside=" + m_SleepingInside + " RestAcc=" + restAccelerator + " RestAccum=" + m_SleepAccumulatorModifier + " Wet=" + GetStatWet().Get();
                 ZS_SendMessage("My rest level is " + restPercent.ToString() + "% - " + debugStr);
             }
 
@@ -655,7 +655,7 @@ modded class PlayerBase
                 string msg = ""; // Text message to update the player with
 
                 // Player is sleeping at night time
-                if (Zen_IsNightTime())
+                if (CHF_IsNightTime())
                 {
                     // And player is wet and a max rest limit is set for wet players
                     if (GetCHFSleepConfig().MaxRestWhenWetNight < 100 && GetStatWet().Get() > 0)
@@ -832,7 +832,7 @@ modded class PlayerBase
     }
 
     // Checks if it is currently night time (adapted from PvZmoD night time checker code - credit to Liven! (https://steamcommunity.com/sharedfiles/filedetails/?id=2051775667)
-    bool Zen_IsNightTime()
+    bool CHF_IsNightTime()
     {
         // If config for night-time override is not set, just use the default DayZ night time check
         if (GetCHFSleepConfig().NightTimeStartHour == 0 && GetCHFSleepConfig().NightTimeStartMin == 0 && GetCHFSleepConfig().NightTimeEndHour == 0 && GetCHFSleepConfig().NightTimeEndMin == 0)
@@ -900,7 +900,7 @@ modded class PlayerBase
         {
             m_IsSleeping = false;
             m_CancelSleep = true;
-            ZenSleep_SyncState();
+            CHFSleep_SyncState();
         }
     }
 
@@ -1003,7 +1003,7 @@ modded class PlayerBase
                 // Server-side
                 if (m_FallUnconsciousFromTiredness)
                 {
-                    Zen_SetPlayerUncon();
+                    CHF_SetPlayerUncon();
                 }
 
                 break;
@@ -1011,7 +1011,7 @@ modded class PlayerBase
     }
 
     // Sets the player unconscious
-    void Zen_SetPlayerUncon()
+    void CHF_SetPlayerUncon()
     {
         // We are allowed to fall asleep from unconsciousness
         ResetSleep();
@@ -1023,14 +1023,14 @@ modded class PlayerBase
         if (GetHealth("", "Shock") < 1)
             m_IsUnconsciousFromTiredness = true;
 
-        ZenSleep_SetState();
+        CHFSleep_SetState();
     }
 
     // Detects when the player is no longer uncon
     override void OnUnconsciousStop(int pCurrentCommandID)
     {
         m_IsUnconsciousFromTiredness = false;
-        ZenSleep_SetState();
+        CHFSleep_SetState();
         super.OnUnconsciousStop(pCurrentCommandID);
 
         if (m_TirednessVignetteValue) // Disable yawn black screen effect if it's active
@@ -1051,7 +1051,7 @@ modded class PlayerBase
     {
         m_IsAllowedToSleep = true;
         m_FallUnconsciousFromTiredness = true;
-        ZenSleep_SyncState();
+        CHFSleep_SyncState();
     }
 
     // Custom method to set the player unconscious from being too tired

@@ -83,7 +83,7 @@ class ZenTirednessModifier: ModifierBase
             // Sometimes the client won't tell the server it's ready to fall uncon after yawning, this overrides that if necessary (TODO: Find a better way to fix this strange issue!)
             if (fallUnconscious && m_SentUnconMessageLastUpdate && !player.IsUnconscious())
             {
-                player.Zen_SetPlayerUncon();
+                player.CHF_SetPlayerUncon();
                 player.m_IsUnconsciousFromTiredness = true;
                 return;
             }
