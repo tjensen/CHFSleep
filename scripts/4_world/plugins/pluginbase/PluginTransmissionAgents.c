@@ -2,6 +2,8 @@ modded class PluginTransmissionAgents
 {
 	void PluginTransmissionAgents()
 	{
-		RegisterAgent(new ZenTirednessAgent);
+		RegisterAgent(new CHFTirednessAgent);
 	}
-}
+};
+
+// vim:ft=enforce

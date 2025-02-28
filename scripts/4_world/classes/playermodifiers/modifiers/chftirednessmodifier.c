@@ -1,5 +1,5 @@
 // This class handles the updating of the player's tiredness, makes them yawn and makes them go uncon randomly if they're too sleepy
-class ZenTirednessModifier: ModifierBase
+class CHFTirednessModifier: ModifierBase
 {
     private bool m_SentUnconMessageLastUpdate = false;
     private float m_TirednessThreshold = -1;
@@ -9,7 +9,7 @@ class ZenTirednessModifier: ModifierBase
     override void Init()
     {
         m_TrackActivatedTime    = false;
-        m_ID                    = ZenSleep_Modifiers.ZEN_TIREDNESS;
+        m_ID                    = CHFSleep_Modifiers.CHF_TIREDNESS;
         m_TickIntervalInactive  = 6;
         m_TickIntervalActive    = 6;
         m_TirednessThreshold    = PlayerBase.MAX_TIREDNESS * ((float)(100.0 - GetCHFSleepConfig().YawnPercentStart) / 100.0); // Converts yawn % start into a tiredness value/1000 (max tiredness)

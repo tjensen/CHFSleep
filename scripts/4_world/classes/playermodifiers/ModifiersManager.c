@@ -1,13 +1,15 @@
-enum ZenSleep_Modifiers
+enum CHFSleep_Modifiers
 {
-	ZEN_TIREDNESS = 1000
-}
+    CHF_TIREDNESS = 1000
+};
 
 modded class ModifiersManager
 {
-	override void Init()
-	{
-		super.Init();
-		AddModifier(new ZenTirednessModifier);
-	}
-}
+    override void Init()
+    {
+        super.Init();
+        AddModifier(new CHFTirednessModifier);
+    }
+};
+
+// vim:ft=enforce

@@ -4,8 +4,8 @@ class CHFSleepConfig
     private static const string CONFIG_VERSION = "4";
 
     // Config location
-    private const static string zenModFolder = "$profile:\\Zenarchist\\";
-    private const static string zenConfigName = "ZenSleepConfig.json";
+    private const static string chfModFolder = "$profile:\\Zenarchist\\";
+    private const static string chfConfigName = "ZenSleepConfig.json";
 
     // Config version
     string ConfigVersion = "";
@@ -111,14 +111,14 @@ class CHFSleepConfig
     // Load config file or create default file if config doesn't exsit
     void Load()
     {
-        if (FileExist(zenModFolder + zenConfigName))
+        if (FileExist(chfModFolder + chfConfigName))
         {   // If config exists, load file
-            JsonFileLoader<CHFSleepConfig>.JsonLoadFile(zenModFolder + zenConfigName, this);
+            JsonFileLoader<CHFSleepConfig>.JsonLoadFile(chfModFolder + chfConfigName, this);
 
             // If version mismatch, backup old version of json before replacing it
             if (ConfigVersion != CONFIG_VERSION)
             {
-                JsonFileLoader<CHFSleepConfig>.JsonSaveFile(zenModFolder + zenConfigName + "_old", this);
+                JsonFileLoader<CHFSleepConfig>.JsonSaveFile(chfModFolder + chfConfigName + "_old", this);
             }
             else
             {
@@ -154,13 +154,13 @@ class CHFSleepConfig
     // Save config
     void Save()
     {
-        if(!FileExist(zenModFolder))
+        if(!FileExist(chfModFolder))
         { // If config folder doesn't exist, create it.
-            MakeDirectory(zenModFolder);
+            MakeDirectory(chfModFolder);
         }
 
         // Save JSON config
-        JsonFileLoader<CHFSleepConfig>.JsonSaveFile(zenModFolder + zenConfigName, this);
+        JsonFileLoader<CHFSleepConfig>.JsonSaveFile(chfModFolder + chfConfigName, this);
     }
 
     // Return an energy drink with the given type name

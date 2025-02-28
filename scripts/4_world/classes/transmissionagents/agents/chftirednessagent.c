@@ -1,4 +1,4 @@
-class ZenTirednessAgent: AgentBase
+class CHFTirednessAgent: AgentBase
 {
     static int MAX_COUNT = 1000;
 
