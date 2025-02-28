@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <modded_inputs>
-	<inputs>
-		<actions>
-			<input name="UACHFSleep_SleepKey" loc="STR_CHFSleep_SleepKey_Txt" />
-			<input name="UACHFSleep_RefreshConfig" loc="STR_CHFSleep_RefreshConfig_Txt" />
-		</actions>
-		<sorting name="CHF" loc="CHF">
-			<input name="UACHFSleep_SleepKey"/>
-			<input name="UACHFSleep_RefreshConfig"/>
-		</sorting>
-	</inputs>
+    <inputs>
+        <actions>
+            <input name="UACHFSleep_SleepKey" loc="STR_CHFSleep_SleepKey_Txt" />
+            <input name="UACHFSleep_RefreshConfig" loc="STR_CHFSleep_RefreshConfig_Txt" />
+        </actions>
+        <sorting name="CHF" loc="CHF">
+            <input name="UACHFSleep_SleepKey"/>
+            <input name="UACHFSleep_RefreshConfig"/>
+        </sorting>
+    </inputs>
     <preset>
-		<input name="UACHFSleep_SleepKey">
+        <input name="UACHFSleep_SleepKey">
             <btn name=""/>
         </input>
-		<input name="UACHFSleep_RefreshConfig">
+        <input name="UACHFSleep_RefreshConfig">
             <btn name="kNumpad3"/>
         </input>
     </preset>
