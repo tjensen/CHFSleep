@@ -1,8 +1,8 @@
 name = "CHFSleep";
-picture = "chfsleep\data\zensleep_thumbnail.edds";
-logoSmall = "chfsleep\data\zensleep_thumbnail.edds";
-logo = "chfsleep\data\zensleep_thumbnail.edds";
-logoOver = "chfsleep\data\zensleep_thumbnail.edds";
+picture = "chfsleep\data\textures\logo.paa";
+logoSmall = "chfsleep\data\textures\logo.paa";
+logo = "chfsleep\data\textures\logo.paa";
+logoOver = "chfsleep\data\textures\logo.paa";
 tooltip = "Chernarus Has Fallen Sleep Mod";
 overview = "Adds immersive sleeping features to the game.";
 action = "https://discord.com/servers/has-fallen-servers-official-796529033473949708";
