@@ -1086,7 +1086,7 @@ modded class PlayerBase
             }
 
             auto requester = PPERequester_SleepEffect.Cast(PPERequesterBank.GetRequester(PPERequester_SleepEffect));
-            requester.ZS_SetEffectValues(blur, vignette, color_overlay_factor);
+            requester.CHFSleep_SetEffectValues(blur, vignette, color_overlay_factor);
         }
         else
         {
