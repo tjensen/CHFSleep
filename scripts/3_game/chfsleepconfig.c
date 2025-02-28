@@ -82,8 +82,6 @@ class CHFSleepConfig
     string CONFIG_MODIFIERS = "-------------------------------------------------------------------------------";
     ref array<ref EnergyDrink> EnergyDrinks = new array<ref EnergyDrink>; // List of energy drink objects (doesn't need to be drinks - can be any consumable)
     ref array<ref RestObject> RestObjects = new array<ref RestObject>; // List of rest objects that you can sleep near for a boost
-    string UsedStimSyringeType = "ZenSleep_Empty_StimSyringe"; // Drop this item when a stim syringe is used ( set to blank for no item, or Syringe for normal syringe)
-    string UsedSleepSyringeType = "ZenSleep_Empty_Syringe"; // Drop this item when a sleep syringe is used (set to blank for no item)
 
     // String config (only applicable if TextNotificationOn = true)
     string CONFIG_TEXT = "------------------------------------------------------------------------------------";
@@ -142,8 +140,6 @@ class CHFSleepConfig
         EnergyDrinks.Insert(new EnergyDrink("Epinephrine", -25));
         EnergyDrinks.Insert(new EnergyDrink("Morphine", 20));
         EnergyDrinks.Insert(new EnergyDrink("AntiChemInjector", 100));
-        EnergyDrinks.Insert(new EnergyDrink("ZenSleep_Syringe", 100));
-        EnergyDrinks.Insert(new EnergyDrink("ZenSleep_StimSyringe", -100));
         // Save default settings for rest objects
         RestObjects.Clear();
         RestObjects.Insert(new RestObject("MediumTent", 80, 100, 10, 0));
