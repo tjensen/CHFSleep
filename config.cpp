@@ -211,7 +211,7 @@ class CfgSoundEffects
     {
         // Flashbang attenuation. TODO: Spend way too many hours playing with this instead of doing something productive.
         // Ideas: Increase attenuation and wacky sleep effects if player is very tired / has been sleeping a long time?
-        class ZenSleepAttenuation
+        class CHFSleepAttenuation
         {
             class Equalizer0
             {

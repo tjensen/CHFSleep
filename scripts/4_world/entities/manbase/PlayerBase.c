@@ -813,7 +813,7 @@ modded class PlayerBase
     {
         if (m_IsSleeping)
         {
-            SetMasterAttenuation("ZenSleepAttenuation");
+            SetMasterAttenuation("CHFSleepAttenuation");
         }
     }
 
