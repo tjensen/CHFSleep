@@ -16,7 +16,6 @@ class CfgMods
     class CHFSleep
     {
         type="mod";
-        defines[] = {"ZenSleep"};
         inputs="chfsleep/data/inputs.xml";
         dependencies[]=
         {
