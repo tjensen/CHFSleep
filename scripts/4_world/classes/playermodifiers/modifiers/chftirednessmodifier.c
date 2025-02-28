@@ -48,7 +48,7 @@ class CHFTirednessModifier: ModifierBase
         {
             if (GetCHFSleepConfig().DebugOn == 1)
             {
-                player.ZS_SendMessage("Yawn/Uncon: N/A, not tired enough");
+                player.CHFSleep_SendMessage("Yawn/Uncon: N/A, not tired enough");
             }
 
             return;
@@ -77,7 +77,7 @@ class CHFTirednessModifier: ModifierBase
 
             if (GetCHFSleepConfig().DebugOn)
             {
-                player.ZS_SendMessage("Fall uncon forced due to tiredness: " + tiredness + "/" + PluginTransmissionAgents.GetAgentMaxCount(CHFSleep_Agents.TIREDNESS));
+                player.CHFSleep_SendMessage("Fall uncon forced due to tiredness: " + tiredness + "/" + PluginTransmissionAgents.GetAgentMaxCount(CHFSleep_Agents.TIREDNESS));
             }
 
             // Sometimes the client won't tell the server it's ready to fall uncon after yawning, this overrides that if necessary (TODO: Find a better way to fix this strange issue!)
@@ -105,7 +105,7 @@ class CHFTirednessModifier: ModifierBase
         {
             if (GetCHFSleepConfig().DebugOn)
             {
-                player.ZS_SendMessage("Fall uncon!");
+                player.CHFSleep_SendMessage("Fall uncon!");
             }
 
             player.SetUnconsciousFromTiredness();
@@ -125,7 +125,7 @@ class CHFTirednessModifier: ModifierBase
                 debugStr = " | tiredDepthPenalty=" + tiredDepthPenalty + " | yawnChance=" + yawnChance + " | unconChance=" + unconChance + " | rand=" + rand + " yawn=" + (rand <= yawnChance) + " uncon=" + fallUnconscious + " FallUncon=" + player.m_FallUnconsciousFromTiredness + " LastYawn=" + m_UpdatesSinceLastYawn + "/100 updates";
             }
 
-            player.ZS_SendMessage("Tiredness=" + tiredness + debugStr);
+            player.CHFSleep_SendMessage("Tiredness=" + tiredness + debugStr);
         }
     }
 };

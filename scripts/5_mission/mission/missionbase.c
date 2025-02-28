@@ -4,12 +4,12 @@ modded class MissionBase
     {
         if (!GetGame().IsDedicatedServer()) // Register server->client RPCs
         {
-            GetRPCManager().AddRPC("ZS_RPC", "RPC_SendSleepDataToClient", this, SingeplayerExecutionType.Client);
+            GetRPCManager().AddRPC("CHFSleep_RPC", "RPC_SendSleepDataToClient", this, SingeplayerExecutionType.Client);
         }
         else // Register client->server RPCs
         {
-            GetRPCManager().AddRPC("ZS_RPC", "RPC_SendReceivedSleepDataToServer", this, SingeplayerExecutionType.Server);
-            GetRPCManager().AddRPC("ZS_RPC", "RPC_SendReloadConfigRequestToServer", this, SingeplayerExecutionType.Server);
+            GetRPCManager().AddRPC("CHFSleep_RPC", "RPC_SendReceivedSleepDataToServer", this, SingeplayerExecutionType.Server);
+            GetRPCManager().AddRPC("CHFSleep_RPC", "RPC_SendReloadConfigRequestToServer", this, SingeplayerExecutionType.Server);
         }
     }
 
@@ -45,7 +45,7 @@ modded class MissionBase
                 player.m_ReceivedSleepConfig = true;
 
                 // Tell server we've confirmed that we've received the config data
-                GetRPCManager().SendRPC("ZS_RPC", "RPC_SendReceivedSleepDataToServer", new Param1< PlayerBase >(player), true, NULL);
+                GetRPCManager().SendRPC("CHFSleep_RPC", "RPC_SendReceivedSleepDataToServer", new Param1< PlayerBase >(player), true, NULL);
             }
         }
     }
@@ -67,7 +67,7 @@ modded class MissionBase
                 return;
             }
 
-            dataPlayer.param1.ZS_SendMessage("Reloading CHFSleep config...");
+            dataPlayer.param1.CHFSleep_SendMessage("Reloading CHFSleep config...");
             GetCHFSleepConfig().Load();
 
             // Send new config update to all players on the server after a brief pause to ensure the new config has successfully loaded

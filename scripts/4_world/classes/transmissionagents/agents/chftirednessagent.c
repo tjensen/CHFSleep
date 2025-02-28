@@ -88,8 +88,6 @@ class CHFTirednessAgent: AgentBase
             }
         }
 
-        //player.ZS_SendMessage("Current Movement State=" + player.m_MovementState.m_iMovement + " / StanceIndex=" + player.m_MovementState.m_iStanceIdx + " - invasibility=" + (m_Invasibility * modifier) + " (Swimming=" + player.IsSwimming() + ", Climbing=" + player.IsClimbingLadder() + ")");
-
         return m_Invasibility * modifier;
     }
 };

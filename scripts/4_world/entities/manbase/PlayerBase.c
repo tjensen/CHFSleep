@@ -57,7 +57,7 @@ modded class PlayerBase
     EffectSound sleepSoundEffect = NULL; // Used for playing the sleep sounds
 
     // Print a debug message (client-only)
-    void ZS_DebugMessage(string message)
+    void CHFSleep_DebugMessage(string message)
     {
         if (GetGame().GetPlayer())
         {
@@ -65,8 +65,8 @@ modded class PlayerBase
         }
     }
 
-    // Sends a text message to the client (ZS_ to prevent conflicts with other mods that might use the same method name)
-    void ZS_SendMessage(string message)
+    // Sends a text message to the client
+    void CHFSleep_SendMessage(string message)
     {
         Param1<string> m_MessageParam = new Param1<string>("");
         if (GetGame().IsDedicatedServer() && m_MessageParam && IsAlive() && message != "" && !IsPlayerDisconnected())
@@ -130,14 +130,14 @@ modded class PlayerBase
     {
         if (!IsPlayerDisconnected())
         {
-            GetRPCManager().SendRPC("ZS_RPC", "RPC_SendSleepDataToClient", new Param8< bool, bool, bool, bool, int, float, float, bool >(m_OnlyShowSleepOnInventory, m_HideHudWhileSleeping, m_AllowInventoryWhileSleep, m_OnlyBlurScreen, m_OnlyShowSleepAbovePercent, m_TirednessHudX, m_TirednessHudY, m_AttenuateSound), true, this.GetIdentity());
+            GetRPCManager().SendRPC("CHFSleep_RPC", "RPC_SendSleepDataToClient", new Param8< bool, bool, bool, bool, int, float, float, bool >(m_OnlyShowSleepOnInventory, m_HideHudWhileSleeping, m_AllowInventoryWhileSleep, m_OnlyBlurScreen, m_OnlyShowSleepAbovePercent, m_TirednessHudX, m_TirednessHudY, m_AttenuateSound), true, this.GetIdentity());
         }
     }
 
     // (Client-side) Sends an admin RPC requesting the server to reload the CHFSleep config
     void RequestServerConfigReload()
     {
-        GetRPCManager().SendRPC("ZS_RPC", "RPC_SendReloadConfigRequestToServer", new Param1< PlayerBase >(this), true, NULL);
+        GetRPCManager().SendRPC("CHFSleep_RPC", "RPC_SendReloadConfigRequestToServer", new Param1< PlayerBase >(this), true, NULL);
     }
 
     // Triggered when variables are synchronized from the server to the client
@@ -147,7 +147,7 @@ modded class PlayerBase
         CHFSleep_ReadState();
 
         // Debug message
-        //ZS_DebugMessage("Sleeping=" + m_IsSleeping + " YawnSound=" + m_PlayYawnSound + " SleepSound=" + m_PlaySleepSound + " CurrentYawn=" + m_CurrentYawn + " FallUnconsciousFromTiredness=" + m_FallUnconsciousFromTiredness);
+        //CHFSleep_DebugMessage("Sleeping=" + m_IsSleeping + " YawnSound=" + m_PlayYawnSound + " SleepSound=" + m_PlaySleepSound + " CurrentYawn=" + m_CurrentYawn + " FallUnconsciousFromTiredness=" + m_FallUnconsciousFromTiredness);
 
         // Update client
         if (GetGame().IsClient())
@@ -368,7 +368,7 @@ modded class PlayerBase
                 msg = GetCHFSleepConfig().Str_ITooTired3; // "I don't have much energy... I should lie down soon and get some rest."
             }
 
-            ZS_SendMessage(msg);
+            CHFSleep_SendMessage(msg);
         }
     }
 
@@ -498,7 +498,7 @@ modded class PlayerBase
 
                         if (GetCHFSleepConfig().DebugOn)
                         {
-                            ZS_SendMessage("Found nearby rest object: " + ro.ObjectType + " - MaxRestDay=" + ro.MaxRestDay + "% SleepAccelerator=" + ro.SleepAcceleratorPercent + "%");
+                            CHFSleep_SendMessage("Found nearby rest object: " + ro.ObjectType + " - MaxRestDay=" + ro.MaxRestDay + "% SleepAccelerator=" + ro.SleepAcceleratorPercent + "%");
                         }
                     }
                 }
@@ -598,7 +598,7 @@ modded class PlayerBase
                     InsertAgent(eAgents.INFLUENZA, randFlu);
                     if (GetCHFSleepConfig().DebugOn)
                     {
-                        ZS_SendMessage("Injected with influenza for no fire: " + randFlu + "/" + GetCHFSleepConfig().InfluenzaInjectNoFire + " (" + GetSingleAgentCount(eAgents.INFLUENZA) + "/1000)");
+                        CHFSleep_SendMessage("Injected with influenza for no fire: " + randFlu + "/" + GetCHFSleepConfig().InfluenzaInjectNoFire + " (" + GetSingleAgentCount(eAgents.INFLUENZA) + "/1000)");
                     }
                 }
             }
@@ -637,7 +637,7 @@ modded class PlayerBase
                             warmCold = GetCHFSleepConfig().Str_RestUpdate4; // and I'm comfortably warm
                         }
 
-                        ZS_SendMessage(GetCHFSleepConfig().Str_RestUpdate + " " + restPercent.ToString() + "% " + warmCold); // My rest level is x% and I'm warm/cold
+                        CHFSleep_SendMessage(GetCHFSleepConfig().Str_RestUpdate + " " + restPercent.ToString() + "% " + warmCold); // My rest level is x% and I'm warm/cold
                     }
                 }
             }
@@ -646,7 +646,7 @@ modded class PlayerBase
             if (GetCHFSleepConfig().DebugOn)
             {
                 string debugStr = "HeatSource=" + m_FireNearby + " IsNight=" + CHF_IsNightTime() + " Inside=" + m_SleepingInside + " RestAcc=" + restAccelerator + " RestAccum=" + m_SleepAccumulatorModifier + " Wet=" + GetStatWet().Get();
-                ZS_SendMessage("My rest level is " + restPercent.ToString() + "% - " + debugStr);
+                CHFSleep_SendMessage("My rest level is " + restPercent.ToString() + "% - " + debugStr);
             }
 
             if (!m_IsUnconscious) // Don't send sleep text updates if we're unconscious
@@ -665,7 +665,7 @@ modded class PlayerBase
                             if (GetCHFSleepConfig().TextNotificationOn)
                             {
                                 msg = GetCHFSleepConfig().Str_CantSleep5; // "I don't think I can sleep any longer, my clothes are wet and I'm uncomfortable..."
-                                ZS_SendMessage(msg);
+                                CHFSleep_SendMessage(msg);
                             }
 
                             m_CantSleep = true;
@@ -683,7 +683,7 @@ modded class PlayerBase
                                 msg = GetCHFSleepConfig().Str_CantSleep1; // "I don't think I can sleep any longer..."
                                 if (restPercent < 100.0)
                                     msg = GetCHFSleepConfig().Str_CantSleep2; // "I don't think I can sleep any longer, I'm too cold..."
-                                ZS_SendMessage(msg);
+                                CHFSleep_SendMessage(msg);
                             }
 
                             m_CantSleep = true;
@@ -700,7 +700,7 @@ modded class PlayerBase
                                 msg = GetCHFSleepConfig().Str_CantSleep1; // "I don't think I can sleep any longer..."
                                 if (restPercent < 100.0)
                                     msg = GetCHFSleepConfig().Str_CantSleep2; // "I don't think I can sleep any longer, I'm too cold..."
-                                ZS_SendMessage(msg);
+                                CHFSleep_SendMessage(msg);
                             }
 
                             m_CantSleep = true;
@@ -722,7 +722,7 @@ modded class PlayerBase
                             if (GetCHFSleepConfig().TextNotificationOn)
                             {
                                 msg = GetCHFSleepConfig().Str_CantSleep5; // "I don't think I can sleep any longer, my clothes are wet and I'm uncomfortable..."
-                                ZS_SendMessage(msg);
+                                CHFSleep_SendMessage(msg);
                             }
 
                             m_CantSleep = true;
@@ -737,7 +737,7 @@ modded class PlayerBase
                         {
                             if (GetCHFSleepConfig().TextNotificationOn)
                             {
-                                ZS_SendMessage(GetCHFSleepConfig().Str_CantSleep3); // "I don't think I can sleep any longer, it's too bright and I'm cold..."
+                                CHFSleep_SendMessage(GetCHFSleepConfig().Str_CantSleep3); // "I don't think I can sleep any longer, it's too bright and I'm cold..."
                             }
 
                             m_CantSleep = true;
@@ -751,7 +751,7 @@ modded class PlayerBase
                         {
                             if (GetCHFSleepConfig().TextNotificationOn)
                             {
-                                ZS_SendMessage(GetCHFSleepConfig().Str_CantSleep4); // "I don't think I can sleep any longer, it's too bright..."
+                                CHFSleep_SendMessage(GetCHFSleepConfig().Str_CantSleep4); // "I don't think I can sleep any longer, it's too bright..."
                             }
 
                             m_CantSleep = true;
@@ -885,7 +885,7 @@ modded class PlayerBase
 
                 if (GetCHFSleepConfig().DebugOn)
                 {
-                    ZS_SendMessage("Giving energy: " + replenish);
+                    CHFSleep_SendMessage("Giving energy: " + replenish);
                 }
             }
         }

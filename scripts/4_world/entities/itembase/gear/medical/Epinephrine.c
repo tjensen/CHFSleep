@@ -15,7 +15,7 @@ modded class Epinephrine
 
         if (GetCHFSleepConfig().DebugOn)
         {
-            player.ZS_SendMessage("Giving tiredness penalty: " + penalty);
+            player.CHFSleep_SendMessage("Giving tiredness penalty: " + penalty);
         }
 
         player.InsertAgent(CHFSleep_Agents.TIREDNESS, penalty);
