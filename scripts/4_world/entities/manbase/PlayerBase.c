@@ -871,26 +871,35 @@ modded class PlayerBase
         return isNight;
     }
 
-    // Adds/removes energy based on consumption item
-    override bool Consume(ItemBase source, float amount, EConsumeType consume_type)
+    override bool Consume(PlayerConsumeData data)
     {
-        if (source)
+        if (data.m_Source)
         {
-            EnergyDrink drink = GetCHFSleepConfig().GetEnergyDrink(source.GetType());
-            if (drink.ItemType != "")
+            auto settings = GetCHFSleepConfig();
+            if (settings)
             {
-                float percent = amount / source.GetQuantityMax();
-                float replenish = (float)MAX_TIREDNESS * (((float)drink.EnergyGained * percent) / 100);
-                InsertAgent(CHFSleep_Agents.TIREDNESS, replenish);
-
-                if (GetCHFSleepConfig().DebugOn)
+                int type = data.m_Source.GetLiquidType();
+                if (type == LIQUID_VODKA)
                 {
-                    CHFSleep_SendMessage("Giving energy: " + replenish);
+                    m_PlayerStomach.CHF_AddSubstance(
+                        data.m_Amount, settings.liquidVodkaSleepFactor);
+                }
+                else if (type == LIQUID_BEER)
+                {
+                    m_PlayerStomach.CHF_AddSubstance(data.m_Amount, settings.liquidBeerSleepFactor);
+                }
+                else
+                {
+                    float factor;
+                    if (settings.GetSleepFactorForType(data.m_Source.GetType(), factor))
+                    {
+                        m_PlayerStomach.CHF_AddSubstance(data.m_Amount, factor);
+                    }
                 }
             }
         }
 
-        return super.Consume(source, amount, consume_type);
+        return super.Consume(data);
     }
 
     // Cancels the sleep state

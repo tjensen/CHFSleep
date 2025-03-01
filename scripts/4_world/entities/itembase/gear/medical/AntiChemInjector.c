@@ -4,13 +4,7 @@ modded class AntiChemInjector
     {
         super.OnApply(player);
 
-        int penaltyPct = GetCHFSleepConfig().GetEnergyDrink("AntiChemInjector").EnergyGained;
-        if (penaltyPct == 0)
-        {
-            return;
-        }
-
-        float penalty = (float)player.MAX_TIREDNESS * ((float)penaltyPct / 100.0);
+        float penalty = (float)player.MAX_TIREDNESS;
 
         if (GetCHFSleepConfig().DebugOn)
         {

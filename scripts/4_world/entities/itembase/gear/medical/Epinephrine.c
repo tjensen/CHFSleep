@@ -5,13 +5,7 @@ modded class Epinephrine
     {
         super.OnApply(player);
 
-        int penaltyPct = GetCHFSleepConfig().GetEnergyDrink("Epinephrine").EnergyGained;
-        if (penaltyPct == 0)
-        {
-            return;
-        }
-
-        float penalty = (float)player.MAX_TIREDNESS * ((float)penaltyPct / 100.0);
+        float penalty = (float)player.MAX_TIREDNESS * -0.25;
 
         if (GetCHFSleepConfig().DebugOn)
         {

@@ -1,14 +1,9 @@
 class CHFSleepConfig
 {
-    // Set actual config version (doesn't save to json)
-    private static const string CONFIG_VERSION = "4";
-
     // Config location
-    private const static string chfModFolder = "$profile:\\Zenarchist\\";
-    private const static string chfConfigName = "ZenSleepConfig.json";
-
-    // Config version
-    string ConfigVersion = "";
+    private const static string FILENAME = "$profile:chfsleep.json";
+    private const static string LEGACY_FOLDER = "$profile:\\Zenarchist\\";
+    private const static string LEGACY_FILENAME = "ZenSleepConfig.json";
 
     // Main config data
     string CONFIG_MAIN = "------------------------------------------------------------------------------------";
@@ -80,7 +75,9 @@ class CHFSleepConfig
 
     // Energy drinks & rest object config
     string CONFIG_MODIFIERS = "-------------------------------------------------------------------------------";
-    ref array<ref EnergyDrink> EnergyDrinks = new array<ref EnergyDrink>; // List of energy drink objects (doesn't need to be drinks - can be any consumable)
+    float liquidVodkaSleepFactor = -0.5;
+    float liquidBeerSleepFactor = -0.5;
+    ref array<ref CHFSleep_ItemSleepFactor> itemSleepFactors = new array<ref CHFSleep_ItemSleepFactor>;
     ref array<ref RestObject> RestObjects = new array<ref RestObject>; // List of rest objects that you can sleep near for a boost
 
     // String config (only applicable if TextNotificationOn = true)
@@ -108,77 +105,72 @@ class CHFSleepConfig
     int DebugOn = 0; // Enable/disable debug mode (1 = full verbosity, 2 = low verbosity)
     int RestUpdateTick = 3; // How often to update player ticks (don't adjust this unless absolutely necessary (eg. if server performance is affected by lots of players), it will require a re-balance of nearly all the above values!)
 
-    // Load config file or create default file if config doesn't exsit
-    void Load()
+    void CHFSleepConfig()
     {
-        if (FileExist(chfModFolder + chfConfigName))
-        {   // If config exists, load file
-            JsonFileLoader<CHFSleepConfig>.JsonLoadFile(chfModFolder + chfConfigName, this);
+        itemSleepFactors.Insert(new CHFSleep_ItemSleepFactor("Roadwarrior_Fresh_brew", 0.4));
+        itemSleepFactors.Insert(new CHFSleep_ItemSleepFactor("Roadwarrior_InstantCoffee", 0.4));
+        itemSleepFactors.Insert(new CHFSleep_ItemSleepFactor("SodaCan_Pipsi", 0.25));
+        itemSleepFactors.Insert(new CHFSleep_ItemSleepFactor("SodaCan_Cola", 0.25));
+        itemSleepFactors.Insert(new CHFSleep_ItemSleepFactor("SodaCan_Kvass", -0.1));
+        itemSleepFactors.Insert(new CHFSleep_ItemSleepFactor("Roadwarrior_Budweiser", -0.2));
 
-            // If version mismatch, backup old version of json before replacing it
-            if (ConfigVersion != CONFIG_VERSION)
-            {
-                JsonFileLoader<CHFSleepConfig>.JsonSaveFile(chfModFolder + chfConfigName + "_old", this);
-            }
-            else
-            {
-                // Config exists and version matches, stop here.
-                return;
-            }
-        }
-
-        // Config file does not exist, create default file
-        ConfigVersion = CONFIG_VERSION;
-
-        // Save default settings for energy drinks
-        EnergyDrinks.Clear();
-        EnergyDrinks.Insert(new EnergyDrink("SodaCan_Pipsi", -15));
-        EnergyDrinks.Insert(new EnergyDrink("SodaCan_Cola", -20));
-        EnergyDrinks.Insert(new EnergyDrink("SodaCan_Spite", -10));
-        EnergyDrinks.Insert(new EnergyDrink("SodaCan_Kvass", -5));
-        EnergyDrinks.Insert(new EnergyDrink("SodaCan_Fronta", -10));
-        EnergyDrinks.Insert(new EnergyDrink("Epinephrine", -25));
-        EnergyDrinks.Insert(new EnergyDrink("Morphine", 20));
-        EnergyDrinks.Insert(new EnergyDrink("AntiChemInjector", 100));
-        // Save default settings for rest objects
-        RestObjects.Clear();
         RestObjects.Insert(new RestObject("MediumTent", 80, 100, 10, 0));
         RestObjects.Insert(new RestObject("MSP_SleepingBag", 80, 100, 10, 0));
         RestObjects.Insert(new RestObject("MSP_Mattress", 80, 100, 10, 1));
         RestObjects.Insert(new RestObject("bl_pallet_bed_s", 80, 100, 20, 0));
         RestObjects.Insert(new RestObject("bl_pallet_bed_m", 80, 100, 25, 0));
-        // Save config
-        Save();
+    }
+
+    // Load config file or create default file if config doesn't exsit
+    void Load()
+    {
+        if (FileExist(FILENAME))
+        {
+            JsonFileLoader<CHFSleepConfig>.JsonLoadFile(FILENAME, this);
+        }
+        else
+        {
+            LoadLegacy();
+            Save();
+        }
+    }
+
+    void LoadLegacy()
+    {
+        if (FileExist(LEGACY_FOLDER + LEGACY_FILENAME))
+        {
+            JsonFileLoader<CHFSleepConfig>.JsonLoadFile(LEGACY_FOLDER + LEGACY_FILENAME, this);
+
+            if (itemSleepFactors.Count() == 0)
+            {
+                itemSleepFactors.Insert(new CHFSleep_ItemSleepFactor("Roadwarrior_Fresh_brew", 0.4));
+                itemSleepFactors.Insert(new CHFSleep_ItemSleepFactor("Roadwarrior_InstantCoffee", 0.4));
+                itemSleepFactors.Insert(new CHFSleep_ItemSleepFactor("SodaCan_Pipsi", 0.25));
+                itemSleepFactors.Insert(new CHFSleep_ItemSleepFactor("SodaCan_Cola", 0.25));
+                itemSleepFactors.Insert(new CHFSleep_ItemSleepFactor("SodaCan_Kvass", -0.1));
+                itemSleepFactors.Insert(new CHFSleep_ItemSleepFactor("Roadwarrior_Budweiser", -0.2));
+            }
+        }
     }
 
     // Save config
     void Save()
     {
-        if(!FileExist(chfModFolder))
-        { // If config folder doesn't exist, create it.
-            MakeDirectory(chfModFolder);
-        }
-
-        // Save JSON config
-        JsonFileLoader<CHFSleepConfig>.JsonSaveFile(chfModFolder + chfConfigName, this);
+        JsonFileLoader<CHFSleepConfig>.JsonSaveFile(FILENAME, this);
     }
 
-    // Return an energy drink with the given type name
-    EnergyDrink GetEnergyDrink(string type)
+    bool GetSleepFactorForType(string type, out float factor)
     {
-        string itemType = type;
-        itemType.ToLower();
-        for (int i = 0; i < EnergyDrinks.Count(); i++)
+        foreach (auto cfg : itemSleepFactors)
         {
-            string toFind = EnergyDrinks.Get(i).ItemType;
-            toFind.ToLower();
-            if (itemType.Contains(toFind)) // Use Contains() to find similar items with an item base (eg. Zagorky / ZagorkyChocolate)
+            if (cfg.type == type)
             {
-                return EnergyDrinks.Get(i);
+                factor = cfg.factor;
+                return true;
             }
         }
 
-        return new EnergyDrink();
+        return false;
     }
 
     // Return a rest object with the given type name
@@ -200,16 +192,15 @@ class CHFSleepConfig
     }
 };
 
-// Defines energy drink config
-class EnergyDrink
+class CHFSleep_ItemSleepFactor
 {
-    string ItemType = ""; // Item type name
-    int EnergyGained = 0; // How much energy this drink gives the player
+    string type;
+    float factor;
 
-    void EnergyDrink(string itemParam = "", int energyParam = 0)
+    void CHFSleep_ItemSleepFactor(string t, float f)
     {
-        ItemType = itemParam;
-        EnergyGained = energyParam;
+        type = t;
+        factor = f;
     }
 };
 

@@ -4,19 +4,7 @@ modded class Morphine
     {
         super.OnApply(player);
 
-        int penaltyPct = GetCHFSleepConfig().GetEnergyDrink("Morphine").EnergyGained;
-        if (penaltyPct == 0)
-        {
-            return;
-        }
-
-        float penalty = (float)player.MAX_TIREDNESS * ((float)penaltyPct / 100.0);
-
-        // If the penalty is supposed to be negative we need to flip it to positive as we're ADDING tiredness
-        if (penaltyPct < 0)
-        {
-            penalty = Math.AbsFloat(penalty);
-        }
+        float penalty = (float)player.MAX_TIREDNESS * 0.2;
 
         if (GetCHFSleepConfig().DebugOn)
         {
