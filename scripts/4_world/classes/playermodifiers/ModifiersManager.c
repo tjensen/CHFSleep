@@ -8,7 +8,10 @@ modded class ModifiersManager
     override void Init()
     {
         super.Init();
+
+#ifdef SERVER
         AddModifier(new CHFTirednessModifier);
+#endif // SERVER
     }
 };
 
